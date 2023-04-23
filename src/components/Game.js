@@ -1,4 +1,3 @@
-import Result from "./Result";
 import newCardDeck from "../utils/NewCardDeck";
 import RandomNumber from "../utils/RandomNumber";
 import './style.css';
@@ -7,7 +6,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 
 
-const Game = ({updStats}) => {
+const Game = () => {
         const navigate = useNavigate();
 
         const gamesStore = sessionStorage.getItem('games');
@@ -22,6 +21,7 @@ const Game = ({updStats}) => {
         const [wins, setWins] = useState(winsStore ? JSON.parse(winsStore) : 0);
         const [losses, setLosses] = useState(lossesStore ? JSON.parse(lossesStore) : 0);
         const [isGameEnded, setIsGameEnded] = useState(false);
+        const [moveNum, setMoveNum] = useState(1);
 
 
         const updSessionStore = (storeName, item) => {
@@ -52,6 +52,7 @@ const Game = ({updStats}) => {
             let playerTakesNow = 0, compTakesNow = 0;
 
             if (compDeal.length > 1 || playerDeal.length > 1) {
+
                 (compDeal[0] < playerDeal[0]) ? playerTakesNow++ : compTakesNow++;
                 let compArr = [...compDeal], playerArr = [...playerDeal];
                 compArr.splice(0, 1);
@@ -60,6 +61,8 @@ const Game = ({updStats}) => {
                 setCompTakes(prevCompTakes => prevCompTakes + compTakesNow);
                 setCompDeal(compArr);
                 setPlayerDeal(playerArr);
+                setMoveNum(26-compArr.length+2);
+                navigate(`/game/move/${moveNum}`);
             } else if (compDeal.length <= 1 || playerDeal.length <= 1) {
                 let winsNow = 0, lossesNow = 0;
                 if (playerTakes > compTakes) {

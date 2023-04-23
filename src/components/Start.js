@@ -3,7 +3,7 @@ import './style.css';
 import {useNavigate } from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
 
-const Start = (props) => {
+const Start = () => {
     const navigate = useNavigate();
     const [inputVal, setInputVal] = useState();
     const [fullName, setFullName] = useState();
@@ -21,9 +21,9 @@ const Start = (props) => {
 
     useEffect(() => {
         if (fullName) {
-            navigate('/game');
+            navigate('/game/move/1');
         }
-    }, [fullName]);
+    }, [fullName, navigate]);
 
     return (
         <div className={'container'}>
